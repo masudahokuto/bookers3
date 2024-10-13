@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+  get 'groups/new'
+  get 'groups/index'
+  get 'groups/show'
+  get 'groups/edit'
   devise_for :users
 
   root :to =>"homes#top"
   get "home/about"=>"homes#about"
-  
+
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update] do
     resources :book_comments, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
@@ -14,6 +18,9 @@ Rails.application.routes.draw do
   	get 'followers' => 'relationships#followers', as: 'followers'
   	get "daily_posts" => "users#daily_posts"
   end
+
+  resources :groups, only: [:new, :index, :show, :create, :edit, :update]
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get '/search', to: 'searches#search'
 end
